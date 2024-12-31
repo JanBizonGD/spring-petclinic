@@ -67,7 +67,7 @@ task buildAndTest {
     doLast {
         java.util.concurrent.TimeUnit.SECONDS.sleep(1);
         if (java.awt.Desktop.isDesktopSupported() && java.awt.Desktop.getDesktop().isSupported(java.awt.Desktop.Action.BROWSE)) {
-            URI uri = new URL('file:///Users/jbizon/Documents/Maven/spring-petclinic/build/reports/tests/test/index.html').toURI();
+            URI uri = new URL("file:///${project.rootDir}/build/reports/tests/test/index.html").toURI();
             java.awt.Desktop.getDesktop().browse(uri)
         }
     }
