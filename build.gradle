@@ -6,6 +6,7 @@ plugins {
   id 'org.cyclonedx.bom' version '1.10.0'
   id 'io.spring.javaformat' version '0.0.43'
   id "io.spring.nohttp" version "0.0.11"
+  id("pl.allegro.tech.build.axion-release") version "1.18.16"
 }
 
 apply plugin: 'java'
@@ -15,7 +16,21 @@ apply plugin: 'io.spring.javaformat'
 gradle.startParameter.excludedTaskNames += [ "checkFormatAot", "checkFormatAotTest" ]
 
 group = 'org.springframework.samples'
-version = '3.4.0'
+
+scmVersion {
+    repository {
+        type.set('git') 
+        directory.set("${project.rootDir}")
+        remote.set('origin') 
+    }
+    tag {
+        prefix.set('spring-petclinic')
+        versionSeparator.set('-')
+    }
+    useHighestVersion.set(true)
+    versionIncrementer('incrementMinor')
+}
+version = scmVersion.version
 
 java {
   sourceCompatibility = JavaVersion.VERSION_17
@@ -42,6 +57,9 @@ dependencies {
   implementation 'org.springframework.boot:spring-boot-starter-validation'
   implementation 'javax.cache:cache-api'
   implementation 'jakarta.xml.bind:jakarta.xml.bind-api'
+
+  implementation("pl.allegro.tech.build.axion-release:pl.allegro.tech.build.axion-release.gradle.plugin:1.18.16")
+
   runtimeOnly 'org.springframework.boot:spring-boot-starter-actuator'
   runtimeOnly "org.webjars:webjars-locator-lite:${webjarsLocatorLiteVersion}"
   runtimeOnly "org.webjars.npm:bootstrap:${webjarsBootstrapVersion}"
