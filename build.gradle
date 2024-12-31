@@ -60,6 +60,20 @@ dependencies {
   checkstyle "com.puppycrawl.tools:checkstyle:${checkstyleVersion}"
 }
 
+task buildAndTest {
+//
+    group = 'My custom' 
+    description = 'Build, test and display results of tests in browser.'
+    doLast {
+        java.util.concurrent.TimeUnit.SECONDS.sleep(1);
+        if (java.awt.Desktop.isDesktopSupported() && java.awt.Desktop.getDesktop().isSupported(java.awt.Desktop.Action.BROWSE)) {
+            URI uri = new URL('file:///Users/jbizon/Documents/Maven/spring-petclinic/build/reports/problems/problems-report.html').toURI();
+            java.awt.Desktop.getDesktop().browse(uri)
+        }
+    }
+    dependsOn(tasks.build, tasks.check)
+}
+
 tasks.named('test') {
   useJUnitPlatform()
 }
