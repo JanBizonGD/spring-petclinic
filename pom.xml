@@ -179,7 +179,7 @@
             <repository>maven-releases</repository>
 
             <!-- Skip the staging deploy mojo -->
-            <!-- <skipNexusStagingDeployMojo>true</skipNexusStagingDeployMojo> -->
+            <skipNexusStagingDeployMojo>true</skipNexusStagingDeployMojo>
           </configuration>
         </plugin>
       <plugin>
