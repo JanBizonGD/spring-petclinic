@@ -17,7 +17,7 @@
 
   <groupId>org.springframework.samples</groupId>
   <artifactId>spring-petclinic</artifactId>
-  <version>4.0.5-SNAPSHOT</version>
+  <version>4.0.5</version>
 
   <name>petclinic</name>
 
@@ -29,7 +29,7 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <!-- Important for reproducible builds. Update using e.g. ./mvnw versions:set
         -DnewVersion=... -->
-    <project.build.outputTimestamp>2025-01-03T10:36:11Z</project.build.outputTimestamp>
+    <project.build.outputTimestamp>2025-01-03T11:07:36Z</project.build.outputTimestamp>
 
     <!-- Web dependencies -->
     <webjars-locator.version>1.0.1</webjars-locator.version>
@@ -322,7 +322,6 @@
     </license>
   </licenses>
 
-<!--
   <distributionManagement>
     <snapshotRepository>
       <id>nexus-snapshots</id>
@@ -333,12 +332,11 @@
       <url>http://localhost:8081/repository/maven-releases/</url>
     </repository>
   </distributionManagement>
--->
   <repositories>
-  <!--  <repository>
+   <repository>
       <id>maven-group</id>
       <url>http://localhost:8081/repository/maven-public/</url>
-    </repository> -->
+    </repository>
     <repository>
       <snapshots>
         <enabled>true</enabled>
