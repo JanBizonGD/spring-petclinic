@@ -17,7 +17,7 @@
 
   <groupId>org.springframework.samples</groupId>
   <artifactId>spring-petclinic</artifactId>
-  <version>4.0.3-SNAPSHOT</version>
+  <version>4.0.4-SNAPSHOT</version>
 
   <name>petclinic</name>
 
@@ -29,7 +29,7 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <!-- Important for reproducible builds. Update using e.g. ./mvnw versions:set
         -DnewVersion=... -->
-    <project.build.outputTimestamp>2024-12-30T13:57:05Z</project.build.outputTimestamp>
+    <project.build.outputTimestamp>2025-01-03T09:58:54Z</project.build.outputTimestamp>
 
     <!-- Web dependencies -->
     <webjars-locator.version>1.0.1</webjars-locator.version>
@@ -162,6 +162,26 @@
 
   <build>
     <plugins>
+        <plugin>
+          <groupId>org.sonatype.plugins</groupId>
+          <artifactId>nxrm3-maven-plugin</artifactId>
+          <!-- replace plugin version with the latest available -->
+          <!-- https://search.maven.org/search?q=a:nxrm3-maven-plugin -->
+          <version>1.0.3</version>
+          <extensions>true</extensions>
+          <configuration>
+            <nexusUrl>http://localhost:8081</nexusUrl>
+
+            <!-- The server "id" element from settings to use authentication from settings.xml-->
+            <serverId>nexus-releases</serverId>
+
+            <!-- Which repository to deploy to -->
+            <repository>maven-releases</repository>
+
+            <!-- Skip the staging deploy mojo -->
+            <!-- <skipNexusStagingDeployMojo>true</skipNexusStagingDeployMojo> -->
+          </configuration>
+        </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-enforcer-plugin</artifactId>
@@ -302,7 +322,23 @@
     </license>
   </licenses>
 
+<!--
+  <distributionManagement>
+    <snapshotRepository>
+      <id>nexus-snapshots</id>
+      <url>http://localhost:8081/repository/maven-snapshots/</url>
+    </snapshotRepository>
+    <repository>
+      <id>nexus-releases</id>
+      <url>http://localhost:8081/repository/maven-releases/</url>
+    </repository>
+  </distributionManagement>
+-->
   <repositories>
+  <!--  <repository>
+      <id>maven-group</id>
+      <url>http://localhost:8081/repository/maven-public/</url>
+    </repository> -->
     <repository>
       <snapshots>
         <enabled>true</enabled>
