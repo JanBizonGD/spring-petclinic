@@ -41,7 +41,8 @@ scmVersion {
         directory.set("${project.rootDir}")
         remote.set('origin') 
         customUsername.set('JanBizonGD')
-        customPassword.set(System.console().readLine) 
+        def pass = System.getenv('PASS')
+        customPassword.set(pass) 
     }
     tag {
         prefix.set('spring-petclinic')
