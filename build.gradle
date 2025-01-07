@@ -40,11 +40,8 @@ scmVersion {
         type.set('git') 
         directory.set("${project.rootDir}")
         remote.set('origin') 
-<<<<<<< HEAD
-=======
         customUsername.set('JanBizonGD')
         customPassword.set(System.console().readLine) 
->>>>>>> 5897300 (commit befoer gradle axion)
     }
     tag {
         prefix.set('spring-petclinic')
