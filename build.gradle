@@ -40,9 +40,6 @@ scmVersion {
         type.set('git') 
         directory.set("${project.rootDir}")
         remote.set('origin') 
-        customUsername.set('JanBizonGD')
-        def pass = System.getenv('PASS')
-        customPassword.set(pass) 
     }
     tag {
         prefix.set('spring-petclinic')
