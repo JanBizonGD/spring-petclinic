@@ -10,6 +10,7 @@ plugins {
   id("pl.allegro.tech.build.axion-release") version "1.18.16"
 }
 
+apply plugin: 'maven-publish'
 apply plugin: 'java'
 apply plugin: 'checkstyle'
 apply plugin: 'io.spring.javaformat'
@@ -18,21 +19,6 @@ gradle.startParameter.excludedTaskNames += [ "checkFormatAot", "checkFormatAotTe
 
 group = 'org.springframework.samples'
 
-publishing {
-    publications {
-        myLibrary(MavenPublication) {
-            from components.java
-        }
-    }
-    repositories {
-        maven {
-            name = 'maven'
-            def releasesRepoUrl = layout.buildDirectory.dir('repository/maven-releases')
-            def snapshotsRepoUrl = layout.buildDirectory.dir('repository/maven-snapshots')
-            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
-        }
-    }
-}
 
 scmVersion {
     repository {
@@ -48,6 +34,32 @@ scmVersion {
     versionIncrementer('incrementMinor')
 }
 version = scmVersion.version
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+             artifact("build/libs/petclinic-${version}.jar") {
+            //artifact("build/libs/petclinic-4.13.0.jar") {
+                extension 'jar'
+            }
+        }
+    }
+    repositories {
+        maven {
+            name = 'nexus'
+//layout.buildDirectory.dir
+            def releasesRepoUrl = ('http://localhost:8081/repository/maven-releases')
+            def snapshotsRepoUrl = ('http://localhost:8081/repository/maven-snapshots')
+            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+            allowInsecureProtocol = true
+            credentials {
+                username project.repoUser
+                password project.repoPassword
+            }
+        }
+    }
+}
+
 
 java {
   sourceCompatibility = JavaVersion.VERSION_17
