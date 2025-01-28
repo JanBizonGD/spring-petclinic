@@ -25,6 +25,7 @@ pipeline {
 
     stage('docker push') {
       steps {
+        sh 'docker images'
         sh 'docker login -u $nexus_cred_USR -p $nexus_cred_PSW http://host.docker.internal:9902'
         sh 'docker push http://host.docker.internal:9902/mr/petclinic:$GIT_COMMIT'
       }
