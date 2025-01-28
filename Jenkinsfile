@@ -24,7 +24,7 @@ docker tag petclinic host.docker.internal:9902/mr:$GIT_COMMIT'''
 
     stage('docker push') {
       steps {
-        sh 'docker login -u $nexus_cred_USR -p $nexus_cred_PSW host.docker.internal:9902'
+        sh 'docker login -u $nexus_cred_USR -p $nexus_cred_PSW http://host.docker.internal:9902'
         sh 'docker push http://host.docker.internal:9902/mr:$GIT_COMMIT'
       }
     }
