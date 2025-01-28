@@ -6,6 +6,7 @@ pipeline {
         sh '''./gradlew check -x test 
 '''
         archiveArtifacts(artifacts: 'src/checkstyle/nohttp-checkstyle.xml', fingerprint: true)
+        sh 'docker-compose --help'
       }
     }
 
