@@ -23,7 +23,7 @@ pipeline {
     stage('docker build') {
       steps {
         sh '''docker build -t petclinic:latest .
-docker tag petclinic http://host.docker.internal:9092/petclinic:$GIT_COMMIT'''
+docker tag petclinic 172.18.0.222:9092/petclinic:$GIT_COMMIT'''
       }
     }
 
@@ -32,7 +32,7 @@ docker tag petclinic http://host.docker.internal:9092/petclinic:$GIT_COMMIT'''
         bindings = 'nexus_docker_repo'
       }
       steps {
-        sh 'docker push http://host.docker.internal:9092/petclinic:$GIT_COMMIT'
+        sh 'docker push 172.18.0.222:9092/petclinic:$GIT_COMMIT'
       }
     }
 
