@@ -19,7 +19,7 @@ pipeline {
       steps {
         sh '''docker build -t petclinic:latest .
 '''
-        sh 'docker tag petclinic host.docker.internal:9902/mr/petclinic:$GIT_COMMIT'
+        sh 'docker tag petclinic host.docker.internal:9902/mr:$GIT_COMMIT'
       }
     }
 
@@ -27,7 +27,7 @@ pipeline {
       steps {
         sh 'docker images'
         sh 'docker login -u $nexus_cred_USR -p $nexus_cred_PSW http://host.docker.internal:9902'
-        sh 'docker push http://host.docker.internal:9902/mr/petclinic:$GIT_COMMIT'
+        sh 'docker push host.docker.internal:9902/mr:$GIT_COMMIT'
       }
     }
 
