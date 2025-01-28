@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('check') {
       steps {
-        sh './gradlew check -x tests'
+        sh './gradlew check -x test'
         archiveArtifacts(artifacts: 'src/checkstyle/nohttp-checkstyle.xml', fingerprint: true)
       }
     }
@@ -16,7 +16,7 @@ pipeline {
 
     stage('build') {
       steps {
-        sh './gradlew build  -x tests'
+        sh './gradlew build  -x test'
       }
     }
 
