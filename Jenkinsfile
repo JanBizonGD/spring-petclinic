@@ -1,8 +1,5 @@
 pipeline {
   agent any
-  environment {
-    nexus_cred = credentials('docker-nexus-repo')
-  }
   stages {
     stage('check') {
       steps {
@@ -21,16 +18,19 @@ pipeline {
     stage('docker build') {
       steps {
         sh '''docker build -t petclinic:latest .
-docker tag petclinic host.docker.internal:9092/petclinic:$GIT_COMMIT'''
+docker tag petclinic host.docker.internal:9902/mr:$GIT_COMMIT'''
       }
     }
 
     stage('docker push') {
       steps {
-        sh 'docker login -u $nexus_cred_USR -p $nexus_cred_PSW'
-        sh 'docker push host.docker.internal:9092/petclinic:$GIT_COMMIT'
+        sh 'docker login -u $nexus_cred_USR -p $nexus_cred_PSW http://host.docker.internal:9902'
+        sh 'docker push host.docker.internal:9902/mr:$GIT_COMMIT'
       }
     }
 
+  }
+  environment {
+    nexus_cred = credentials('docker-nexus-repo')
   }
 }
