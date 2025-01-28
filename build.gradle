@@ -16,7 +16,7 @@ apply plugin: 'checkstyle'
 apply plugin: 'io.spring.javaformat'
 
 gradle.startParameter.excludedTaskNames += [ "checkFormatAot", "checkFormatAotTest" ]
-gradle.startParameter.systemPropertiesArgs.put("-Dspring.profiles.active", "hsqldb,spring-data-jpa")
+gradle.startParameter.systemPropertiesArgs.putAll(["-Dspring.profiles.active" : "hsqldb,spring-data-jpa"])
 
 group = 'org.springframework.samples'
 
