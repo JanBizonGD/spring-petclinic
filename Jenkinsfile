@@ -3,14 +3,15 @@ pipeline {
   stages {
     stage('check') {
       steps {
-        sh './gradlew check -x test'
+        sh '''./gradlew check -x test 
+'''
         archiveArtifacts(artifacts: 'src/checkstyle/nohttp-checkstyle.xml', fingerprint: true)
       }
     }
 
     stage('test') {
       steps {
-        sh './gradlew test'
+        sh './gradlew test -Pspring.profiles.active=hsqldb,spring-data-jpa'
       }
     }
 
