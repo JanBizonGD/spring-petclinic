@@ -17,6 +17,9 @@ apply plugin: 'io.spring.javaformat'
 
 gradle.startParameter.excludedTaskNames += [ "checkFormatAot", "checkFormatAotTest" ]
 
+// For purpose of jenkinsfile - one http inside project
+gradle.startParameter.excludedTaskNames += [ "checkstyleNohttp" ]
+
 group = 'org.springframework.samples'
 
 
