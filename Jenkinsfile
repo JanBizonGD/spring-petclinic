@@ -20,5 +20,21 @@ pipeline {
       }
     }
 
+    stage('docker build') {
+      steps {
+        sh '''docker build -t petclinic:latest .
+docker tag petclinic host.docker.internal:9092/petclinic:$GIT_COMMIT'''
+      }
+    }
+
+    stage('docker push') {
+      environment {
+        bindings = 'nexus_docker_repo'
+      }
+      steps {
+        sh 'docker push host.docker.internal:9092/petclinic:$GIT_COMMIT'
+      }
+    }
+
   }
 }
