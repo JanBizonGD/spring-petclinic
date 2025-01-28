@@ -3,6 +3,7 @@ pipeline {
   stages {
     stage('check') {
       steps {
+        sh './gradlew clean'
         sh './gradlew check'
         archiveArtifacts(artifacts: 'src/checkstyle/nohttp-checkstyle.xml', fingerprint: true)
       }
