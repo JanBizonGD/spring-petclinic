@@ -3,7 +3,6 @@ pipeline {
   stages {
     stage('check') {
       steps {
-        sh './gradlew clean'
         sh './gradlew check'
         archiveArtifacts(artifacts: 'src/checkstyle/nohttp-checkstyle.xml', fingerprint: true)
       }
@@ -24,16 +23,17 @@ pipeline {
     stage('docker build') {
       steps {
         sh '''docker build -t petclinic:latest .
-docker tag petclinic 172.18.0.222:9092/petclinic:$GIT_COMMIT'''
+docker tag petclinic host.docker.internal:9092/petclinic:$GIT_COMMIT'''
       }
     }
 
     stage('docker push') {
       environment {
-        bindings = 'nexus_docker_repo'
+        nexus_cred = credentials('docker_nexus_repo')
       }
       steps {
-        sh 'docker push 172.18.0.222:9092/petclinic:$GIT_COMMIT'
+        sh 'docker login -u $nexus_cred_USR -p $nexus_cred_PSW'
+        sh 'docker push host.docker.internal:9092/petclinic:$GIT_COMMIT'
       }
     }
 
