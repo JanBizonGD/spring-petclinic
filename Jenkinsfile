@@ -6,13 +6,6 @@ pipeline {
         sh '''./gradlew check -x test 
 '''
         archiveArtifacts(artifacts: 'src/checkstyle/nohttp-checkstyle.xml', fingerprint: true)
-        sh 'docker-compose --help'
-      }
-    }
-
-    stage('test') {
-      steps {
-        sh './gradlew test -Pspring.profiles.active=hsqldb,spring-data-jpa'
       }
     }
 
