@@ -1,7 +1,7 @@
 pipeline {
   agent any
   environment {
-    nexus_cred = credentials('docker_nexus_repo')
+    nexus_cred = credentials('docker-nexus-repo')
   }
   stages {
     stage('check') {
