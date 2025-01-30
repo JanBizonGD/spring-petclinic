@@ -12,9 +12,8 @@ check:
     ./gradlew check -x test
   artifacts:
     when: always
-    reports:
-      checkstyle:
-        - src/checkstyle/nohttp-checkstyle.xml
+    paths:
+      - src/checkstyle/nohttp-checkstyle.xml
 
 build:
   stage: build
