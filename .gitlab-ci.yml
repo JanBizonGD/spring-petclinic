@@ -6,6 +6,8 @@ cache:
 
 check:
   stage: check
+  before_script: 
+    apk add openjdk8
   script:
     ./gradlew check -x test
   artifacts:
