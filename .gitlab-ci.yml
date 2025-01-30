@@ -1,0 +1,41 @@
+image: alpine:latest
+
+cache:
+  paths:
+    - ./build
+
+check:
+  stage: check
+  script:
+    ./gradlew check -x test
+  artifacts:
+    when: always
+    reports:
+      checkstyle:
+        - src/checkstyle/nohttp-checkstyle.xml
+
+build:
+  stage: build
+  script:
+    ./gradlew build  -x test
+
+docker_build:
+  stage: docker build
+  script:
+    docker build -t petclinic:latest .
+    docker tag petclinic 172.18.14.7:9902/mr:$CI_COMMIT_SHORT_SHA
+
+docker_push:
+  stage: docker push
+  before_script:
+    docker images
+    docker login -u $Nexus_login -p $Nexus_password http://172.18.14.7:9902
+  script:
+    docker push 172.18.14.7:9902/mr:$CI_COMMIT_SHORT_SHA
+
+stages:
+  - check
+  - test
+  - build
+  - docker build
+  - docker push
