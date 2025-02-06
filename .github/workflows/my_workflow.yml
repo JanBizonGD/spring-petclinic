@@ -6,7 +6,7 @@ on:
 
 
 jobs:
-  docker:
+  check_and_build:
     runs-on: self-hosted
     steps:
       - name: Cache NPM dependencies
@@ -26,6 +26,12 @@ jobs:
       - name: Build
         run: ./gradlew build -x test
         shell: bash
+  docker:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          repository: janbizongd/spring-petclinic
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
         with:
@@ -44,9 +50,5 @@ jobs:
         with:
           push: true
           tags: host.docker.internal:9902/mr:${{ github.sha }}
-          cache-to: |
-            .cache
-            type=local,src=.cache
-          cache-from: |
-            .cache
-            type=local,src=.cache
+          cache-to: type=local,src=.cache
+          cache-from: type=local,src=.cache
