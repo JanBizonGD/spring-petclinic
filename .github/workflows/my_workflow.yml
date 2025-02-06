@@ -53,4 +53,6 @@ jobs:
           push: true
           tags: host.docker.internal:9902/mr:${{ github.sha }}
           cache-to: type=local,dest=.cache
-          cache-from: type=local,src=.cache
+          cache-from: |
+            type=local,src=.cache
+            type=local,src=/root/.m2
