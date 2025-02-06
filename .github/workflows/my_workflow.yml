@@ -17,6 +17,9 @@ jobs:
             ./build
             ./target
           key: .cache
+      - name: Locatate myself
+        run: pwd
+        shell: bash
       - name: Checkstyle
         run: ./gradlew check -x test
         shell: bash
