@@ -51,6 +51,7 @@ jobs:
         run: |
           docker images
           docker build -t host.docker.internal:9902/mr:${{ github.sha }} .
+          docker push host.docker.internal:9902/mr:${{ github.sha }}
       # - name: Docker Build
       #   uses: docker/build-push-action@v6
       #   with:
