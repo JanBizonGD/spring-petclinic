@@ -17,11 +17,14 @@ jobs:
             ./build
             ./target
           key: .cache
+      - uses: actions/checkout@v3
+        with:
+          repository: janbizongd/spring-petclinic
       - name: Checkstyle
-        run: gradle check -x test
+        run: ./gradlew check -x test
         shell: bash
       - name: Build
-        run: gradle build -x test
+        run: ./gradlew build -x test
         shell: bash
       - name: Docker Login
         uses: docker/login-action@v3
