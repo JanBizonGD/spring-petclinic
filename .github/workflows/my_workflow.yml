@@ -47,12 +47,16 @@ jobs:
           registry: host.docker.internal:9902
           username: ${{ vars.NEXUS_USER }}
           password: ${{ secrets.NEXUS_SECRET }}
-      - name: Docker Build
-        uses: docker/build-push-action@v6
-        with:
-          push: true
-          tags: host.docker.internal:9902/mr:${{ github.sha }}
-          cache-to: type=local,dest=.cache
-          cache-from: |
-            type=local,src=.cache
-            type=local,src=/root/.m2
+      - name: docker build
+        run: |
+          docker images
+          docker build -t host.docker.internal:9902/mr:${{ github.sha }} .
+      # - name: Docker Build
+      #   uses: docker/build-push-action@v6
+      #   with:
+      #     push: true
+      #     tags: host.docker.internal:9902/mr:${{ github.sha }}
+      #     cache-to: type=local,dest=.cache
+      #     cache-from: |
+      #       type=local,src=.cache
+      #       type=local,src=/root/.m2
