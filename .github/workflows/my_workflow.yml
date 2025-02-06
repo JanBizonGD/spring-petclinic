@@ -17,14 +17,11 @@ jobs:
             ./build
             ./target
           key: .cache
-      - name: List files
-        run: ls
-        shell: bash
       - name: Checkstyle
-        run: ./gradlew check -x test
+        run: gradle check -x test
         shell: bash
       - name: Build
-        run: ./gradlew build -x test
+        run: gradle build -x test
         shell: bash
       - name: Docker Login
         uses: docker/login-action@v3
