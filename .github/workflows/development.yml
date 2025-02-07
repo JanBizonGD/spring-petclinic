@@ -1,4 +1,4 @@
-name: ci
+name: development
 
 on:
   push:
@@ -48,15 +48,15 @@ jobs:
           registry: host.docker.internal:9902
           username: ${{ vars.NEXUS_USER }}
           password: ${{ secrets.NEXUS_SECRET }}
-      # - name: docker build
-      #   run: |
-      #     docker images
-      #     docker build -t host.docker.internal:9902/mr:${{ github.sha }} .
-      #     docker push host.docker.internal:9902/mr:${{ github.sha }}
-      - name: Docker Build
-        uses: docker/build-push-action@v6
-        with:
-          push: true
-          tags: host.docker.internal:9902/mr:${{ github.sha }}
-          cache-from: |
-            type=local,src=/Users/jbizon/.m2
+      - name: docker build
+        run: |
+          docker images
+          docker build -t host.docker.internal:9902/mr:${{ github.sha }} .
+          docker push host.docker.internal:9902/mr:${{ github.sha }}
+      # - name: Docker Build
+      #   uses: docker/build-push-action@v6
+      #   with:
+      #     push: true
+      #     tags: host.docker.internal:9902/mr:${{ github.sha }}
+      #     cache-from: |
+      #       type=local,src=/root/.m2
