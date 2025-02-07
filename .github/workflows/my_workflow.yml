@@ -9,7 +9,7 @@ jobs:
   check_and_build:
     runs-on: self-hosted
     steps:
-      - name: Cache NPM dependencies
+      - name: Cache dependencies
         uses: actions/cache@v4
         with:
           path: |
@@ -26,7 +26,8 @@ jobs:
       - name: Build
         run: ./gradlew build -x test
         shell: bash
-  docker:
+  docker_build:
+    needs: check_and_build
     runs-on: self-hosted
     steps:
       - uses: actions/checkout@v3
@@ -47,17 +48,17 @@ jobs:
           registry: host.docker.internal:9902
           username: ${{ vars.NEXUS_USER }}
           password: ${{ secrets.NEXUS_SECRET }}
-      - name: docker build
-        run: |
-          docker images
-          docker build -t host.docker.internal:9902/mr:${{ github.sha }} .
-          docker push host.docker.internal:9902/mr:${{ github.sha }}
-      # - name: Docker Build
-      #   uses: docker/build-push-action@v6
-      #   with:
-      #     push: true
-      #     tags: host.docker.internal:9902/mr:${{ github.sha }}
-      #     cache-to: type=local,dest=.cache
-      #     cache-from: |
-      #       type=local,src=.cache
-      #       type=local,src=/root/.m2
+      # - name: docker build
+      #   run: |
+      #     docker images
+      #     docker build -t host.docker.internal:9902/mr:${{ github.sha }} .
+      #     docker push host.docker.internal:9902/mr:${{ github.sha }}
+      - name: Docker Build
+        uses: docker/build-push-action@v6
+        with:
+          push: true
+          tags: host.docker.internal:9902/mr:${{ github.sha }}
+          # cache-to: type=local,dest=.cache
+          # cache-from: |
+          #   type=local,src=.cache
+          #   type=local,src=/root/.m2
