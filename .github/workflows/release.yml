@@ -19,16 +19,10 @@ jobs:
           password: ${{ secrets.NEXUS_SECRET }}
       - name: prepare_release
         run: |
-          ./gradlew createRelease
+          ./gradlew createRelease 
       - name: docker build
         run: |
           docker images
           docker build -t host.docker.internal:9903/main:$(./gradlew cV -q -Prelease.quiet) .
           docker push host.docker.internal:9903/main:$(./gradlew cV -q -Prelease.quiet)
-      # - name: Docker Build
-      #   uses: docker/build-push-action@v6
-      #   with:
-      #     push: true
-      #     tags: host.docker.internal:9902/mr:${{ github.sha }}
-      #     cache-from: |
-      #       type=local,src=/root/.m2
+# later version should be increased and pushed to github

@@ -1,0 +1,18 @@
+FROM eclipse-temurin:latest
+RUN mkdir -p /opt/petclinic && cd /opt/petclinic
+COPY build/libs/* /opt/petclinic/
+WORKDIR /opt/petclinic/
+COPY ./src/ ./src
+COPY --chmod=0755 mvnw mvnw
+COPY .mvn/ .mvn/
+RUN --mount=type=bind,source=pom.xml,target=pom.xml \
+    --mount=type=cache,target=/root/.m2 ./mvnw dependency:go-offline -DskipTests
+RUN --mount=type=bind,source=pom.xml,target=pom.xml \
+    --mount=type=cache,target=/root/.m2 \
+    ./mvnw package -DskipTests && \
+    mv target/$(./mvnw help:evaluate -Dexpression=project.artifactId -q -DforceStdout)-$(./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout).jar target/app.jar
+
+#EXPOSE 8080
+EXPOSE 8080:8080
+#ENTRYPOINT [ "java", "-Dspring.profiles.active=postgres", "org.springframework.boot.loader.loader.JarLauncher" ]
+ENTRYPOINT [ "java", "-jar", "target/app.jar" ]

@@ -41,7 +41,7 @@ README.md
 **/.gradletasknamecache
 **/.nb-gradle
 **/.springBeans
-**/build
+#**/build
 **/dist
 **/gradle-app.setting
 **/nbbuild
