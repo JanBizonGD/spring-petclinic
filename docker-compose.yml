@@ -11,9 +11,9 @@ services:
   server:
     build:
       context: .
-      target: development
+      #target: final
     ports:
-      - 8080:8080
+      - 8085:8080
       - 8000:8000
     depends_on:
        db:

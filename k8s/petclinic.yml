@@ -4,12 +4,14 @@ kind: Service
 metadata:
   name: petclinic
 spec:
-  type: NodePort
+  #type: NodePort
   ports:
     - port: 80
       targetPort: 8080
+      nodePort: 30080
   selector:
     app: petclinic
+  type: LoadBalancer
 
 ---
 apiVersion: apps/v1
@@ -31,6 +33,7 @@ spec:
       containers:
         - name: workload
           image: dsyer/petclinic
+          #imagePullPolicy: Never
           env:
             - name: SPRING_PROFILES_ACTIVE
               value: postgres

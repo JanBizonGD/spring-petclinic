@@ -1,0 +1,8 @@
+# This is configuration for JMX exporter
+openTelemetry:
+  endpoint: http://prometheus:9090/api/v1/otlp
+  protocol: http/protobuf
+  interval: 60
+jmxUrl: service:jmx:rmi:///jndi/rmi://localhost:9020/jmxrmi
+rules:
+- pattern: ".*"
